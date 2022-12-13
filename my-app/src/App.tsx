@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import InputField from "./Component/InputField";
 
-function App() {
+// let name: string;
+// name = 10 ;
+// console.log(obj);
+
+// type Person = {
+//   name: string;
+//   age: number | string; // both number and string can be used
+//   class?: string; // used for suppose its an optional field
+// };
+// interface AllDetails extends Person {
+//   married?: boolean;
+//   graduation?: boolean;
+//   intermediate?: boolean;
+// }
+// let obj: AllDetails = {
+//   name: "Nipendra",
+//   age: 21,
+//   class: "webDevelopement",
+// };
+// console.log(obj);
+
+const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <span>Taskify</span>
+      <InputField />
     </div>
   );
-}
+};
 
 export default App;
