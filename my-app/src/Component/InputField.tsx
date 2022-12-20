@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 
-const InputField = () => {
+const InputField: React.FC = () => {
   return (
     <form className="input">
       <input className="input_box" placeholder="Add Task" type="input" />
