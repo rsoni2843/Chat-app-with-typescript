@@ -1,20 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "ES6",
+    "lib": ["ES5", "ES2015", "ES2016", "DOM", "ES2015.Promise"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    // "typescript.enablePromptUseWorkspaceTsdk": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "module": "ES6",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "typeRoots": ["node_modules/@types", "src/types"],
+    // "isolatedModules": true,
+    // "typescript.enablePromptUseWorkspaceTsdk": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react"
   },
-  "include": ["src"]
+  "include": ["src", "src/declaration.d.ts"]
 }
