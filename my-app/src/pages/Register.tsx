@@ -2,7 +2,10 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import Logo from "../assets/logo.svg";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import { ToastOptions } from "react-toastify/dist/types";
+import "react-toastify/dist/ReactToastify.css";
 interface Form {
   username: string;
   email: string;
@@ -16,17 +19,54 @@ const Register: FC = () => {
     password: "",
     confirmPassword: "",
   });
+  const toastFeatures: ToastOptions = {
+    autoClose: 8000,
+    position: "bottom-center",
+    draggable: true,
+  };
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    alert("form");
+    const { username, email, password } = user;
+    if (handleValidation()) {
+      const { data } = await axios.post("http://localhost:5000/user/register", {
+        username,
+        email,
+        password,
+      });
+      console.log(data);
+    }
+  }
+
+  function handleValidation() {
+    const { username, password, confirmPassword } = user;
+    if (password !== confirmPassword) {
+      toast.error(
+        "Password and confirm password should be same.",
+        toastFeatures
+      );
+      return false;
+    } else if (username.length < 3) {
+      toast.error(
+        "Username should be greater than 3 characters.",
+        toastFeatures
+      );
+      return false;
+    } else if (password.length < 8) {
+      toast.error(
+        "Password should be greater than 8 characters.",
+        toastFeatures
+      );
+      return false;
+    }
+    return true;
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   }
-  
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -94,6 +134,7 @@ const Register: FC = () => {
           </span>
         </div>
       </form>
+      <ToastContainer />
     </>
   );
 };
