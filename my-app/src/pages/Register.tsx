@@ -1,7 +1,7 @@
 // import styles from "./Styles/RegisterStyles";
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import Logo from "../assets/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { ToastOptions } from "react-toastify/dist/types";
@@ -13,6 +13,7 @@ interface Form {
   confirmPassword: string;
 }
 const Register: FC = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<Form>({
     username: "",
     email: "",
@@ -29,12 +30,28 @@ const Register: FC = () => {
     e.preventDefault();
     const { username, email, password } = user;
     if (handleValidation()) {
-      const { data } = await axios.post("http://localhost:5000/user/register", {
-        username,
-        email,
-        password,
-      });
-      console.log(data);
+      try {
+        const { data } = await axios.post(
+          "http://localhost:5000/user/register",
+          {
+            username,
+            email,
+            password,
+          }
+        );
+
+        if (data.status === true) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+          navigate("/");
+        }
+      } catch (error) {
+        console.log(error);
+        // if (err.response.data.status === false) {
+        //   return toast.error(err.response.data?.message, toastFeatures);
+        // }
+      }
+
+      // console.log(data);
     }
   }
 

@@ -24,20 +24,22 @@ class UserController {
       }
       const hashedPassword = await bcrypt.hash(password, 10);
       console.log(username, email, password);
-      const user = await UserModel.create({
+      const newUser = await new UserModel({
         username: username,
         email: email,
         password: hashedPassword,
       });
-      console.log(user);
-      await user.save();
+      console.log(newUser);
+      await newUser.save();
       return res.status(201).send({
         message: "User Created Successfully",
         status: true,
         user: { username: username, email: email },
       });
     } catch (err) {
-      res.status(400).send({ message: "Some error occured", status: false });
+      return res
+        .status(400)
+        .send({ message: "Some error occured", status: false });
     }
   };
 }

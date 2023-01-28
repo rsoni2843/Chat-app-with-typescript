@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, min: 3, max: 20, unique: true },
-  email: { type: String, required: true, max: 50, unique: true },
-  password: { type: String, required: true, min: 8 },
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   isAvatarImageSet: { type: Boolean, default: false },
-  avatarImage: { type: Boolean, default: "" },
+  avatarImage: { type: String, default: "" },
 });
 
-const UserModel = mongoose.model("user", userSchema);
+const UserModel = mongoose.model("User", userSchema);
+
 export default UserModel;
