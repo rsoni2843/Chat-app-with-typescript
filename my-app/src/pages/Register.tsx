@@ -6,6 +6,8 @@ import axios, { AxiosError } from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { ToastOptions } from "react-toastify/dist/types";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux/es/exports";
+import register from "../Redux/Register/register.action";
 interface Form {
   username: string;
   email: string;
@@ -14,6 +16,7 @@ interface Form {
 }
 const Register: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [user, setUser] = useState<Form>({
     username: "",
     email: "",
@@ -28,34 +31,34 @@ const Register: FC = () => {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const { username, email, password } = user;
-    if (handleValidation()) {
-      try {
-        const { data } = await axios.post(
-          "http://localhost:5000/user/register",
-          {
-            username,
-            email,
-            password,
-          }
-        );
 
-        if (data.status === true) {
-          localStorage.setItem("user", JSON.stringify(data.user));
-          navigate("/");
-        }
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.log(error?.response?.status);
-          if (error?.response?.status === 409) {
-            return toast.error(
-              "User already registered. Please use the same username to login",
-              toastFeatures
-            );
-          }
-        }
-        console.log(error);
-      }
+    if (handleValidation()) {
+      dispatch(register(user));
+      // try {
+      //   const { data } = await axios.post(
+      //     "http://localhost:5000/user/register",
+      //     {
+      //       username,
+      //       email,
+      //       password,
+      //     }
+      //   );
+      //   if (data.status === true) {
+      //     localStorage.setItem("user", JSON.stringify(data.user));
+      //     navigate("/");
+      //   }
+      // } catch (error) {
+      //   if (error instanceof AxiosError) {
+      //     console.log(error?.response?.status);
+      //     if (error?.response?.status === 409) {
+      //       return toast.error(
+      //         "User already registered. Please use the same username to login",
+      //         toastFeatures
+      //       );
+      //     }
+      //   }
+      //   console.log(error);
+      // }
     }
   }
 
