@@ -1,8 +1,8 @@
 // import styles from "./Styles/RegisterStyles";
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import Logo from "../assets/logo.svg";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import axios, { AxiosError } from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { ToastOptions } from "react-toastify/dist/types";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,6 +13,7 @@ interface Form {
   confirmPassword: string;
 }
 const Register: FC = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<Form>({
     username: "",
     email: "",
@@ -29,12 +30,32 @@ const Register: FC = () => {
     e.preventDefault();
     const { username, email, password } = user;
     if (handleValidation()) {
-      const { data } = await axios.post("http://localhost:5000/user/register", {
-        username,
-        email,
-        password,
-      });
-      console.log(data);
+      try {
+        const { data } = await axios.post(
+          "http://localhost:5000/user/register",
+          {
+            username,
+            email,
+            password,
+          }
+        );
+
+        if (data.status === true) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+          navigate("/");
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          console.log(error?.response?.status);
+          if (error?.response?.status === 409) {
+            return toast.error(
+              "User already registered. Please use the same username to login",
+              toastFeatures
+            );
+          }
+        }
+        console.log(error);
+      }
     }
   }
 
