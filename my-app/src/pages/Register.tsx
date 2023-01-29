@@ -2,7 +2,7 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import Logo from "../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { ToastOptions } from "react-toastify/dist/types";
 import "react-toastify/dist/ReactToastify.css";
@@ -45,13 +45,17 @@ const Register: FC = () => {
           navigate("/");
         }
       } catch (error) {
+        if (error instanceof AxiosError) {
+          console.log(error?.response?.status);
+          if (error?.response?.status === 409) {
+            return toast.error(
+              "User already registered. Please use the same username to login",
+              toastFeatures
+            );
+          }
+        }
         console.log(error);
-        // if (err.response.data.status === false) {
-        //   return toast.error(err.response.data?.message, toastFeatures);
-        // }
       }
-
-      // console.log(data);
     }
   }
 
