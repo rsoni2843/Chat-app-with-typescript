@@ -1,19 +1,23 @@
-// import styles from "./Styles/RegisterStyles";
-import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState, useEffect } from "react";
 import Logo from "../assets/logo.svg";
-import { Link, useNavigate } from "react-router-dom";
-import axios, { AxiosError } from "axios";
+import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { ToastOptions } from "react-toastify/dist/types";
 import "react-toastify/dist/ReactToastify.css";
-interface Form {
+import register from "../Redux/Register/register.action";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks";
+export interface Form {
   username: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
+
 const Register: FC = () => {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { res, reRegister, isLoading, isError } = useAppSelector(
+    (store) => store.register
+  );
   const [user, setUser] = useState<Form>({
     username: "",
     email: "",
@@ -26,38 +30,13 @@ const Register: FC = () => {
     draggable: true,
   };
 
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-    const { username, email, password } = user;
-    if (handleValidation()) {
-      try {
-        const { data } = await axios.post(
-          "http://localhost:5000/user/register",
-          {
-            username,
-            email,
-            password,
-          }
-        );
 
-        if (data.status === true) {
-          localStorage.setItem("user", JSON.stringify(data.user));
-          navigate("/");
-        }
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.log(error?.response?.status);
-          if (error?.response?.status === 409) {
-            return toast.error(
-              "User already registered. Please use the same username to login",
-              toastFeatures
-            );
-          }
-        }
-        console.log(error);
-      }
+    if (handleValidation()) {
+      dispatch(register(user));
     }
-  }
+  };
 
   function handleValidation() {
     const { username, password, confirmPassword } = user;
@@ -87,7 +66,20 @@ const Register: FC = () => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   }
-
+  useEffect(() => {
+    if (reRegister) {
+      toast.error(
+        "User already registered. Please use the same username or email to login",
+        toastFeatures
+      );
+    }
+    if (isError) {
+      toast.error(
+        "Some error occured. Kindly refresh the page.",
+        toastFeatures
+      );
+    }
+  }, [reRegister, isError]);
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -148,7 +140,7 @@ const Register: FC = () => {
             className="bg-tertiary hover:bg-primary rounded-lg p-2"
             type="submit"
           >
-            SUBMIT
+            {isLoading ? "SUBMITTING" : "SUBMIT"}
           </button>
           <span>
             Already have an account ? <Link to={"/login"}>Login</Link>
