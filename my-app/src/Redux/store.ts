@@ -1,6 +1,17 @@
-import { applyMiddleware, combineReducers, legacy_createStore } from "redux";
 import thunk from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./rootReducer";
 
-const rootReducer = combineReducers({});
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+});
 
-export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+// export type AppThunk<ReturnType = void> = ThunkAction<
+//   ReturnType,
+//   RootState,
+//   unknown,
+//   Action
+// >;
