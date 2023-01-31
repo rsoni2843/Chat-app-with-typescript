@@ -7,7 +7,7 @@ import {
 } from "./register.actionType";
 import { Dispatch } from "redux";
 import { RegisterDispatchTypes } from "./register.actionType";
-import { Form } from "../../pages/Register";
+import { Form } from "../../component/Register/RegisterType";
 
 const register =
   (creds: Form) => async (dispatch: Dispatch<RegisterDispatchTypes>) => {
@@ -17,10 +17,14 @@ const register =
         "http://localhost:5000/user/register",
         creds
       );
-      console.log(data);
+
       if (data.status === true) {
         localStorage.setItem("user", JSON.stringify(data.user));
-        dispatch({ type: REGISTER_SUCCESS, payload: data });
+        dispatch({
+          type: REGISTER_SUCCESS,
+          payload: data?.user,
+          status: data?.status,
+        });
       }
     } catch (error) {
       if (error instanceof AxiosError) {
