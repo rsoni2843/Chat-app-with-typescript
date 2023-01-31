@@ -7,7 +7,6 @@ const toastFeatures: ToastOptions = {
   draggable: true,
 };
 export function handleValidation(user: Form) {
-  console.log(user);
   const { username, password, confirmPassword } = user;
   if (password !== confirmPassword) {
     toast.error("Password and confirm password should be same.", toastFeatures);

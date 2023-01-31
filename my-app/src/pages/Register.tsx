@@ -33,7 +33,7 @@ const Register: FC = () => {
       navigate("/login");
     }
   }, [reRegister, isError, status]);
-
+  console.log(status);
   return (
     <>
       <RegisterComponent />

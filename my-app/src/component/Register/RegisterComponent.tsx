@@ -18,8 +18,8 @@ const RegisterComponent: FC = () => {
   });
 
   const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     if (handleValidation(user)) {
-      e.preventDefault();
       dispatch(register(user));
     }
   };
