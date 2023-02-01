@@ -6,14 +6,7 @@ import {
   REGISTER_ERROR,
   REGISTER_USER_EXIST,
 } from "./register.actionType";
-// type Res = {
-//   message: string;
-//   status: boolean;
-//   user: {
-//     username: string;
-//     email: string;
-//   };
-// };
+
 interface InitState {
   isLoading: boolean;
   isError: boolean;

@@ -1,26 +1,24 @@
 import React, { FC, useState, FormEvent, ChangeEvent } from "react";
 import { ToastContainer } from "react-toastify";
 import { useAppSelector, useAppDispatch } from "../../Redux/hooks";
-import register from "../../Redux/Register/register.action";
 import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
-import { handleRegisterValidation } from "./handleRegisterValidation";
-import { RegisterForm } from "./registerType";
+import { handleLoginValidation } from "./handleLoginValidation";
+import { LoginForm } from "./loginType";
+import login from "./../../Redux/Login/login.action";
 
-const RegisterComponent: FC = () => {
+const LoginComponent: FC = () => {
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((store) => store.register);
-  const [user, setUser] = useState<RegisterForm>({
+  const [user, setUser] = useState<LoginForm>({
     username: "",
-    email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (handleRegisterValidation(user)) {
-      dispatch(register(user));
+    if (handleLoginValidation(user)) {
+      dispatch(login(user));
     }
   };
 
@@ -44,23 +42,13 @@ const RegisterComponent: FC = () => {
               className="bg-transparent focus:border-solid focus:border-2 focus:outline-none focus:border-primary p-2 border-2 border-tertiary border-solid rounded-lg"
               required
               type="text"
+              min={"3"}
               placeholder="Enter Username"
               name="username"
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col text-left">
-            <label htmlFor="name">Email</label>
-            <input
-              value={user.email}
-              className="bg-transparent focus:border-solid focus:border-2 focus:outline-none focus:border-primary p-2 border-2 border-tertiary border-solid rounded-lg"
-              required
-              type="email"
-              placeholder="Enter Email"
-              name="email"
-              onChange={handleChange}
-            />
-          </div>
+
           <div className="flex flex-col text-left">
             <label htmlFor="name">Password</label>
             <input
@@ -73,18 +61,7 @@ const RegisterComponent: FC = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex flex-col text-left">
-            <label htmlFor="name">Confirm Password</label>
-            <input
-              value={user.confirmPassword}
-              required
-              className="bg-transparent focus:border-solid focus:border-2 focus:outline-none focus:border-primary p-2 border-2 border-tertiary border-solid rounded-lg"
-              type="password"
-              placeholder="Enter Confirm Password"
-              name="confirmPassword"
-              onChange={handleChange}
-            />
-          </div>
+
           <button
             className="bg-tertiary hover:bg-primary rounded-lg p-2"
             type="submit"
@@ -92,7 +69,7 @@ const RegisterComponent: FC = () => {
             {isLoading ? "SUBMITTING" : "SUBMIT"}
           </button>
           <span>
-            Already have an account ? <Link to={"/login"}>Login</Link>
+            Don't have an account ? <Link to={"/register"}>Register</Link>
           </span>
         </div>
       </form>
@@ -101,4 +78,4 @@ const RegisterComponent: FC = () => {
   );
 };
 
-export default RegisterComponent;
+export default LoginComponent;

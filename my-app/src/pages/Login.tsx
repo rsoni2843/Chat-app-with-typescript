@@ -1,7 +1,12 @@
 import React from "react";
+import LoginComponent from "./../component/Login/LoginComponent";
 
 const Login: React.FC = () => {
-  return <>React</>;
+  return (
+    <>
+      <LoginComponent />
+    </>
+  );
 };
 
 export default Login;
