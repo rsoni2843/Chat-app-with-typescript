@@ -1,12 +1,12 @@
 import { toast, ToastOptions } from "react-toastify";
-import { Form } from "./RegisterType";
+import { RegisterForm } from "./registerType";
 
 const toastFeatures: ToastOptions = {
   autoClose: 8000,
   position: "bottom-center",
   draggable: true,
 };
-export function handleValidation(user: Form) {
+export function handleRegisterValidation(user: RegisterForm) {
   const { username, password, confirmPassword } = user;
   if (password !== confirmPassword) {
     toast.error("Password and confirm password should be same.", toastFeatures);

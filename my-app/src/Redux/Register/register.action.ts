@@ -7,10 +7,11 @@ import {
 } from "./register.actionType";
 import { Dispatch } from "redux";
 import { RegisterDispatchTypes } from "./register.actionType";
-import { Form } from "../../component/Register/RegisterType";
+import { RegisterForm } from "../../component/Register/registerType";
 
 const register =
-  (creds: Form) => async (dispatch: Dispatch<RegisterDispatchTypes>) => {
+  (creds: RegisterForm) =>
+  async (dispatch: Dispatch<RegisterDispatchTypes>) => {
     dispatch({ type: REGISTER_LOADING });
     try {
       const { data } = await axios.post(
@@ -19,7 +20,7 @@ const register =
       );
 
       if (data.status === true) {
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("registered_user", JSON.stringify(data.user));
         dispatch({
           type: REGISTER_SUCCESS,
           payload: data?.user,
