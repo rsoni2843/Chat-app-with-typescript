@@ -1,5 +1,5 @@
 import { Reducer, AnyAction } from "redux";
-import { RegisterDispatchTypes, Res } from "./register.actionType";
+import { RegisterDispatchTypes, RegisterRes } from "./register.actionType";
 import {
   REGISTER_LOADING,
   REGISTER_SUCCESS,
@@ -11,7 +11,7 @@ interface InitState {
   isLoading: boolean;
   isError: boolean;
   reRegister: boolean;
-  res?: Res | null;
+  res?: RegisterRes | null;
   status?: boolean;
 }
 const initState: InitState = {

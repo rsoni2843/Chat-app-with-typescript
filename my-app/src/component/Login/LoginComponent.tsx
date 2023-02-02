@@ -9,7 +9,7 @@ import login from "./../../Redux/Login/login.action";
 
 const LoginComponent: FC = () => {
   const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((store) => store.register);
+  const { isLoading } = useAppSelector((store) => store.login);
   const [user, setUser] = useState<LoginForm>({
     username: "",
     password: "",
@@ -26,7 +26,6 @@ const LoginComponent: FC = () => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   }
-
   return (
     <>
       <form onSubmit={handleSubmit}>

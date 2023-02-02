@@ -32,9 +32,39 @@ class UserController {
       console.log(newUser);
       await newUser.save();
       return res.status(201).send({
-        message: "User Created Successfully",
+        message: "User registered successfully",
         status: true,
         user: { username: username, email: email },
+      });
+    } catch (err) {
+      return res
+        .status(400)
+        .send({ message: "Some error occured", status: false });
+    }
+  };
+  static userLogin = async (req: Request, res: Response) => {
+    try {
+      const { username, password } = req.body;
+      const user = await UserModel.findOne({ username });
+      if (!user) {
+        return res.status(409).send({
+          message: "Incorrect username or password",
+          status: false,
+        });
+      }
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      console.log(isPasswordValid);
+      if (!isPasswordValid) {
+        return res.status(409).send({
+          message: "Incorrect username or password",
+          status: false,
+        });
+      }
+
+      return res.status(201).send({
+        message: "User login successfully",
+        status: true,
+        user: user,
       });
     } catch (err) {
       return res

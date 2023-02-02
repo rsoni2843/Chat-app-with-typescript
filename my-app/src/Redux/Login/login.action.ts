@@ -12,13 +12,14 @@ import { LoginForm } from "./../../component/Login/loginType";
 const login =
   (creds: LoginForm) => async (dispatch: Dispatch<LoginDispatchTypes>) => {
     dispatch({ type: LOGIN_LOADING });
+    console.log(creds);
     try {
       const { data } = await axios.post(
         "http://localhost:5000/user/login",
         creds
       );
-
       if (data.status === true) {
+        console.log(data);
         localStorage.setItem("logged_user", JSON.stringify(data.user));
         dispatch({
           type: LOGIN_SUCCESS,
@@ -28,7 +29,7 @@ const login =
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error?.response?.status);
+        console.log(error);
         if (error?.response?.status === 409) {
           return dispatch({
             type: LOGIN_NOT_EXIST,

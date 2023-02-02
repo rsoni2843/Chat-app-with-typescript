@@ -13,6 +13,8 @@ export interface LoginLoading {
 }
 export interface LoginSuccess {
   type: typeof LOGIN_SUCCESS;
+  payload: unknown;
+  status: boolean;
 }
 export interface LoginError {
   type: typeof LOGIN_ERROR;
