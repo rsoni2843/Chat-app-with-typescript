@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.post("/register", UserController.userRegister);
 router.post("/login", UserController.userLogin);
+router.get("/getAllUsers/:id", UserController.getAllUsers);
+router.get("/getCurrentUser/:id", UserController.getCurrentUser);
 
 router.get("/", (req, res) => res.send("User route working"));
 

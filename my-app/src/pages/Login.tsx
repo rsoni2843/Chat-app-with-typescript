@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { incorrectUsernamePassword, isError, status } = useAppSelector(
+  const { incorrectUsernamePassword, isError } = useAppSelector(
     (store) => store.login
   );
+  const loggedUser = localStorage.getItem("logged_user");
+
   const toastFeatures: ToastOptions = {
     autoClose: 8000,
     position: "bottom-center",
@@ -24,10 +26,10 @@ const Login: React.FC = () => {
         toastFeatures
       );
     }
-    if (status) {
+    if (loggedUser) {
       navigate("/");
     }
-  }, [incorrectUsernamePassword, isError, status]);
+  }, [incorrectUsernamePassword, isError, loggedUser]);
   return (
     <>
       <LoginComponent />

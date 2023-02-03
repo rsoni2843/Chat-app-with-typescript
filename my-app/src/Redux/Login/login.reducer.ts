@@ -4,7 +4,9 @@ import {
   LOGIN_LOADING,
   LOGIN_NOT_EXIST,
   LOGIN_SUCCESS,
+  LOGOUT,
   LoginDispatchTypes,
+  LogoutDispatchTypes,
 } from "./login.actionType";
 
 interface InitState {
@@ -12,19 +14,17 @@ interface InitState {
   isError: boolean;
   incorrectUsernamePassword: boolean;
   res: null | unknown;
-  status: boolean;
 }
 const initState: InitState = {
   isLoading: false,
   isError: false,
   incorrectUsernamePassword: false,
   res: null,
-  status: false,
 };
 
 const loginReducer: Reducer<InitState, AnyAction> = (
   state: InitState = initState,
-  action: LoginDispatchTypes
+  action: LoginDispatchTypes | LogoutDispatchTypes
 ): InitState => {
   switch (action.type) {
     case LOGIN_LOADING: {
@@ -32,7 +32,6 @@ const loginReducer: Reducer<InitState, AnyAction> = (
         ...state,
         isError: false,
         isLoading: true,
-        status: false,
         incorrectUsernamePassword: false,
         res: null,
       };
@@ -44,7 +43,6 @@ const loginReducer: Reducer<InitState, AnyAction> = (
         isLoading: false,
         res: action.payload,
         incorrectUsernamePassword: false,
-        status: action.status,
       };
     }
     case LOGIN_ERROR: {
@@ -52,7 +50,6 @@ const loginReducer: Reducer<InitState, AnyAction> = (
         ...state,
         isError: true,
         isLoading: false,
-        status: false,
         incorrectUsernamePassword: false,
         res: null,
       };
@@ -62,8 +59,18 @@ const loginReducer: Reducer<InitState, AnyAction> = (
         ...state,
         isError: false,
         isLoading: false,
-        status: false,
         incorrectUsernamePassword: true,
+        res: null,
+      };
+    }
+    case LOGOUT: {
+      localStorage.removeItem("logged_user");
+      localStorage.removeItem("user_info");
+      return {
+        ...state,
+        isError: false,
+        isLoading: false,
+        incorrectUsernamePassword: false,
         res: null,
       };
     }

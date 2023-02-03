@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_NOT_EXIST,
   LOGIN_ERROR,
+  LOGOUT,
 } from "./login.actionType";
 import { LoginForm } from "./../../component/Login/loginType";
 
@@ -20,11 +21,10 @@ const login =
       );
       if (data.status === true) {
         console.log(data);
-        localStorage.setItem("logged_user", JSON.stringify(data.user));
+        localStorage.setItem("logged_user", JSON.stringify(data?.user?._id));
         dispatch({
           type: LOGIN_SUCCESS,
           payload: data?.user,
-          status: data?.status,
         });
       }
     } catch (error) {
@@ -39,4 +39,7 @@ const login =
       dispatch({ type: LOGIN_ERROR });
     }
   };
+
+export const logout = () => ({ type: LOGOUT });
+
 export default login;

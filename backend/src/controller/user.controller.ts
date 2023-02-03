@@ -72,5 +72,29 @@ class UserController {
         .send({ message: "Some error occured", status: false });
     }
   };
+
+  static getAllUsers = async (req: Request, res: Response) => {
+    try {
+      // Getting all users here except the logged user
+      const users = await UserModel.find({
+        _id: { $ne: req.params.id },
+      }).select(["email", "username", "avatarImage", "_id"]);
+      return res.send({ users: users });
+    } catch (err) {
+      res.status(400).send({ message: "Some error occured" });
+    }
+  };
+  static getCurrentUser = async (req: Request, res: Response) => {
+    try {
+      const user = await UserModel.findOne(
+        { _id: req.params.id },
+        { _id: 1, username: 1, email: 1, avatarImage: 1 }
+      );
+      console.log(user);
+      return res.send({ user: user });
+    } catch (err) {
+      res.status(400).send({ message: "Some error occured" });
+    }
+  };
 }
 export default UserController;
