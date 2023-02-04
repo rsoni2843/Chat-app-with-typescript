@@ -3,6 +3,7 @@ export const LOGIN_SUCCESS = "login/success";
 export const LOGIN_ERROR = "login/error";
 export const LOGIN_NOT_EXIST = "login/not_exist";
 
+export const LOGOUT = "logout";
 // export type Res = {
 //   username: string;
 //   email: string;
@@ -13,6 +14,7 @@ export interface LoginLoading {
 }
 export interface LoginSuccess {
   type: typeof LOGIN_SUCCESS;
+  payload: unknown;
 }
 export interface LoginError {
   type: typeof LOGIN_ERROR;
@@ -26,3 +28,7 @@ export type LoginDispatchTypes =
   | LoginSuccess
   | LoginError
   | LoginNotExist;
+
+export interface LogoutDispatchTypes {
+  type: typeof LOGOUT;
+}

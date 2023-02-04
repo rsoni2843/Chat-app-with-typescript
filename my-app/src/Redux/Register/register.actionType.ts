@@ -3,7 +3,7 @@ export const REGISTER_SUCCESS = "register/success";
 export const REGISTER_ERROR = "register/error";
 export const REGISTER_USER_EXIST = "register/user_exist";
 
-export type Res = {
+export type RegisterRes = {
   username: string;
   email: string;
 };
@@ -13,7 +13,7 @@ export interface RegisterLoading {
 }
 export interface RegisterSuccess {
   type: typeof REGISTER_SUCCESS;
-  payload: Res;
+  payload: RegisterRes;
   status: boolean;
 }
 export interface RegisterError {
