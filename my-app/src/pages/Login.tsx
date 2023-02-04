@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import LoginComponent from "./../component/Login/LoginComponent";
 import { useAppSelector } from "../Redux/hooks";
-import { toast, ToastOptions } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { toastFeatures } from "../component/Register/registerType";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -11,11 +12,6 @@ const Login: React.FC = () => {
   );
   const loggedUser = localStorage.getItem("logged_user");
 
-  const toastFeatures: ToastOptions = {
-    autoClose: 8000,
-    position: "bottom-center",
-    draggable: true,
-  };
   useEffect(() => {
     if (incorrectUsernamePassword) {
       toast.error("Incorrect username or password.", toastFeatures);
@@ -27,9 +23,9 @@ const Login: React.FC = () => {
       );
     }
     if (loggedUser) {
-      navigate("/");
+      navigate("/setAvatar");
     }
-  }, [incorrectUsernamePassword, isError, loggedUser]);
+  }, [incorrectUsernamePassword, isError, loggedUser, navigate]);
   return (
     <>
       <LoginComponent />

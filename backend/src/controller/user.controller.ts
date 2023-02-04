@@ -96,5 +96,25 @@ class UserController {
       res.status(400).send({ message: "Some error occured" });
     }
   };
+  static setAvatar = async (req: Request, res: Response) => {
+    try {
+      const userId = req.params.id;
+      console.log(userId);
+      const avatarImage = req.body.image;
+
+      const userData = await UserModel.findByIdAndUpdate(
+        userId,
+        {
+          isAvatarImageSet: true,
+          avatarImage,
+        },
+        { new: true }
+      );
+      console.log(userData);
+      return res.status(201).send({ isSet: userData?.isAvatarImageSet });
+    } catch (err) {
+      return res.send({ message: "Cant set" });
+    }
+  };
 }
 export default UserController;

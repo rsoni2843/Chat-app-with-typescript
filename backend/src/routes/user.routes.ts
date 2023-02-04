@@ -6,6 +6,7 @@ router.post("/register", UserController.userRegister);
 router.post("/login", UserController.userLogin);
 router.get("/getAllUsers/:id", UserController.getAllUsers);
 router.get("/getCurrentUser/:id", UserController.getCurrentUser);
+router.post("/setAvatar/:id", UserController.setAvatar);
 
 router.get("/", (req, res) => res.send("User route working"));
 
