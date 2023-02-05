@@ -31,6 +31,7 @@ export interface AllUsersLoading {
 }
 export interface AllUsersSuccess {
   type: typeof ALL_USER_SUCCESS;
+  allUser: User[];
 }
 export interface AllUsersError {
   type: typeof ALL_USER_ERROR;

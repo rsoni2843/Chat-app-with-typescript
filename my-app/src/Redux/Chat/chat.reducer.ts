@@ -26,6 +26,7 @@ interface InitState {
   userLoading: boolean;
   userError: boolean;
   userInfo: null | UserInfo;
+  allUsers: null | UserInfo[];
 }
 
 const initState: InitState = {
@@ -34,6 +35,7 @@ const initState: InitState = {
   userLoading: false,
   userError: false,
   userInfo: null,
+  allUsers: null,
 };
 
 function chatReducer(
@@ -53,6 +55,7 @@ function chatReducer(
         ...state,
         allUsersLoading: false,
         allUsersError: false,
+        allUsers: action.allUser,
       };
     }
     case ALL_USER_ERROR: {
