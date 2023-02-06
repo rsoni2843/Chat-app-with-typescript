@@ -5,20 +5,39 @@ import { Buffer } from "buffer";
 import axios from "axios";
 import { toastFeatures } from "../component/Register/registerType";
 import { ToastContainer, toast } from "react-toastify";
+import { useAppSelector, useAppDispatch } from "../Redux/hooks";
+import { getCurrentUser } from "../Redux/Chat/chat.action";
 
 const SetAvatar: FC = () => {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { userInfo } = useAppSelector((store) => store.chat);
   const [avatar, setAvatar] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const loggedUser = localStorage.getItem("logged_user");
+  const navigate = useNavigate();
   const [selectedAvatar, setSelectedAvatar] = useState<number | undefined>(
     undefined
   );
 
+  // If user is not logged in will redirect to login page else will get the currentUser information
+
   useEffect(() => {
-    if (!localStorage.getItem("logged_user")) {
+    if (!loggedUser) {
       navigate("/login");
+    } else {
+      dispatch(getCurrentUser(loggedUser));
     }
-  }, []);
+  }, [loggedUser, dispatch, navigate]);
+
+  // If users avatar image is not set it will redirect to avatar page
+  useEffect(() => {
+    if (userInfo) {
+      console.log(userInfo);
+      if (userInfo?.avatarImage !== "") {
+        navigate("/");
+      }
+    }
+  }, [userInfo, navigate]);
 
   const setProfilePic = async () => {
     if (selectedAvatar === undefined) {
@@ -46,7 +65,7 @@ const SetAvatar: FC = () => {
   };
   //   console.log(avatar[]);
   async function getAvatar() {
-    const data = [];
+    const data: string[] = [];
     for (let i = 0; i < 5; i++) {
       const image = await axios.get(
         `https://api.multiavatar.com/${Math.round(Math.random() * 1000)}`

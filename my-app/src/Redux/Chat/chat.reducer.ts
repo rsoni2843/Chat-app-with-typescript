@@ -13,7 +13,7 @@ import {
   AllUserDispatchType,
 } from "./chat.actionType";
 
-interface UserInfo {
+export interface UserInfo {
   _id: string;
   username: string;
   email: string;
@@ -25,7 +25,7 @@ interface InitState {
   allUsersError: boolean;
   userLoading: boolean;
   userError: boolean;
-  userInfo: null | UserInfo;
+  userInfo: null | UserInfo ;
   allUsers: null | UserInfo[];
 }
 

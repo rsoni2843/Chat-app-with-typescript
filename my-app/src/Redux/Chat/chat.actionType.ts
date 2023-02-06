@@ -6,7 +6,7 @@ export const ALL_USER_LOADING = "all/loading";
 export const ALL_USER_SUCCESS = "all/success";
 export const ALL_USER_ERROR = "all/error";
 
-interface User {
+export interface User {
   _id: string;
   username: string;
   email: string;
