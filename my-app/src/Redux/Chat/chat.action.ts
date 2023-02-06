@@ -10,13 +10,16 @@ import {
   CURRENT_USER_SUCCESS,
   CURRENT_USER_LOADING,
 } from "./chat.actionType";
-export const getAllUser =
+export const getAllUsers =
   (id: string) => async (dispatch: Dispatch<AllUserDispatchType>) => {
+    console.log(id);
     dispatch({ type: ALL_USER_LOADING });
     try {
-      let res = axios.get(`http://localhost:5000/user/getAllUser/${id}`);
-      console.log(res);
-      dispatch({ type: ALL_USER_SUCCESS });
+      const { data } = await axios.get(
+        `http://localhost:5000/user/getAllUsers/${id}`
+      );
+      console.log(data);
+      dispatch({ type: ALL_USER_SUCCESS, allUser: data.users });
     } catch (err) {
       dispatch({ type: ALL_USER_ERROR });
     }

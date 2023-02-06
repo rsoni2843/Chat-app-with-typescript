@@ -14,6 +14,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types", "src/types"],
+    "noImplicitAny": false,
     // "isolatedModules": true,
     // "typescript.enablePromptUseWorkspaceTsdk": true,
     "noEmit": true,
