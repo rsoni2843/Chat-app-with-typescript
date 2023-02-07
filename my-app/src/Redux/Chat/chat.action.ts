@@ -12,13 +12,12 @@ import {
 } from "./chat.actionType";
 export const getAllUsers =
   (id: string) => async (dispatch: Dispatch<AllUserDispatchType>) => {
-    console.log(id);
     dispatch({ type: ALL_USER_LOADING });
     try {
       const { data } = await axios.get(
         `http://localhost:5000/user/getAllUsers/${id}`
       );
-      console.log(data);
+      // console.log(data);
       dispatch({ type: ALL_USER_SUCCESS, allUser: data.users });
     } catch (err) {
       dispatch({ type: ALL_USER_ERROR });

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { logout } from "./../../Redux/Login/login.action";
+import * as io from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
 import { useNavigate } from "react-router-dom";
 import AllUsersSection from "./AllUsersSection";
@@ -7,11 +8,13 @@ import ChatSection from "./ChatSection";
 import { getAllUsers } from "./../../Redux/Chat/chat.action";
 import Welcome from "./Welcome";
 
+const socket = io.connect("http://localhost:5000");
+
 const ChatComponent: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { userInfo, allUsers } = useAppSelector((store) => store.chat);
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentChat, setCurrentChat] = useState(undefined);
   const loggedUser = JSON.parse(localStorage.getItem("logged_user") as string);
   function handleLogout() {
     dispatch(logout());
@@ -20,14 +23,16 @@ const ChatComponent: FC = () => {
   useEffect(() => {
     dispatch(getAllUsers(loggedUser));
   }, [dispatch, loggedUser]);
-  if (userInfo?.avatarImage === "") {
-    console.log(userInfo);
-  }
 
   function handleChatChange(chat: any) {
-    setCurrentUser(chat);
+    setCurrentChat(chat);
   }
-  console.log(currentUser);
+  useEffect(() => {
+    if (userInfo) {
+      socket.emit("add-user", userInfo?._id);
+    }
+  }, [userInfo]);
+
   return (
     <div>
       <div className="flex justify-evenly">
@@ -41,10 +46,14 @@ const ChatComponent: FC = () => {
           user={userInfo}
           changeChat={handleChatChange}
         />
-        {currentUser === undefined ? (
+        {currentChat === undefined ? (
           <Welcome user={userInfo} />
         ) : (
-          <ChatSection currentUser={currentUser} />
+          <ChatSection
+            currentChat={currentChat}
+            socket={socket}
+            currentUser={userInfo}
+          />
         )}
       </div>
     </div>

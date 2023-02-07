@@ -23,13 +23,11 @@ class UserController {
         });
       }
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log(username, email, password);
       const newUser = await new UserModel({
         username: username,
         email: email,
         password: hashedPassword,
       });
-      console.log(newUser);
       await newUser.save();
       return res.status(201).send({
         message: "User registered successfully",
@@ -53,7 +51,6 @@ class UserController {
         });
       }
       const isPasswordValid = await bcrypt.compare(password, user.password);
-      console.log(isPasswordValid);
       if (!isPasswordValid) {
         return res.status(409).send({
           message: "Incorrect username or password",
@@ -90,7 +87,7 @@ class UserController {
         { _id: req.params.id },
         { _id: 1, username: 1, email: 1, avatarImage: 1 }
       );
-      console.log(user);
+      // console.log(user);
       return res.send({ user: user });
     } catch (err) {
       res.status(400).send({ message: "Some error occured" });
@@ -99,7 +96,6 @@ class UserController {
   static setAvatar = async (req: Request, res: Response) => {
     try {
       const userId = req.params.id;
-      console.log(userId);
       const avatarImage = req.body.image;
 
       const userData = await UserModel.findByIdAndUpdate(
@@ -110,7 +106,6 @@ class UserController {
         },
         { new: true }
       );
-      console.log(userData);
       return res.status(201).send({ isSet: userData?.isAvatarImageSet });
     } catch (err) {
       return res.send({ message: "Cant set" });

@@ -32,3 +32,6 @@ code {
     monospace;
 }
 
+.react-input-emoji--container {
+  color: red;
+}
