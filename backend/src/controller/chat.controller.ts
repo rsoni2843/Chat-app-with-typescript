@@ -10,7 +10,7 @@ class ChatController {
         users: [from, to],
         sender: from,
       });
-      console.log(data);
+      //   console.log(data);
       if (data) {
         return res.status(201).send({ message: "Message added successfully" });
       } else {

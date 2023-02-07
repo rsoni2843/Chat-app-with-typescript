@@ -8,31 +8,54 @@ import { UserInfo } from "../../Redux/Chat/chat.reducer";
 interface PropsType {
   currentChat: User | undefined;
   currentUser: UserInfo | null;
+  socket: any;
 }
 
-const ChatSection: FC<PropsType> = ({ currentChat, currentUser }) => {
-  const [messages, setMessages] = useState([]);
+const ChatSection: FC<PropsType> = ({ currentChat, currentUser, socket }) => {
+  const [messages, setMessages] = useState<any>([]);
+  const [arrivalMessage, setArrivalMessage] = useState<any>();
+
   // console.log("CHAT", currentChat);
   // console.log("USER", currentUser);
   const handleSendMessage = async (msg: string) => {
-    console.log(msg);
-    axios.post("http://localhost:5000/chat/addMessage", {
+    socket.emit("send-msg", {
+      to: currentChat?._id,
+      from: currentUser?._id,
+      msg,
+    });
+    await axios.post("http://localhost:5000/chat/addMessage", {
       from: currentUser?._id,
       to: currentChat?._id,
       message: msg,
     });
+    const msgs: any = [...messages];
+    msgs.push({ fromSelf: true, message: msg });
+    setMessages(msgs);
   };
-  async function getMessages(messages) {
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("msg-receive", (msg) => {
+        setArrivalMessage({ fromSelf: false, message: msg });
+      });
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  async function getMessage() {
     const res = await axios.post("http://localhost:5000/chat/getMessage", {
       from: currentUser?._id,
       to: currentChat?._id,
     });
-    setMessages(res.data);
+    setMessages(res?.data);
   }
+
   useEffect(() => {
-    getMessages(messages);
-  }, [currentChat]);
-  console.log(messages);
+    getMessage();
+  }, [currentChat, currentUser]);
   return (
     <>
       <div className="w-3/5 m-auto border-2 h-full border-white border-solid">

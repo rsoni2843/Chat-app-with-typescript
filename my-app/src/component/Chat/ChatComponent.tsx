@@ -1,11 +1,14 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useRef } from "react";
 import { logout } from "./../../Redux/Login/login.action";
+import * as io from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
 import { useNavigate } from "react-router-dom";
 import AllUsersSection from "./AllUsersSection";
 import ChatSection from "./ChatSection";
 import { getAllUsers } from "./../../Redux/Chat/chat.action";
 import Welcome from "./Welcome";
+
+const socket = io.connect("http://localhost:5000");
 
 const ChatComponent: FC = () => {
   const dispatch = useAppDispatch();
@@ -22,11 +25,14 @@ const ChatComponent: FC = () => {
   }, [dispatch, loggedUser]);
 
   function handleChatChange(chat: any) {
-    // console.log("CHat", chat);
-    // setCu
     setCurrentChat(chat);
   }
-  // console.log(currentChat);
+  useEffect(() => {
+    if (userInfo) {
+      socket.emit("add-user", userInfo?._id);
+    }
+  }, [userInfo]);
+
   return (
     <div>
       <div className="flex justify-evenly">
@@ -43,7 +49,11 @@ const ChatComponent: FC = () => {
         {currentChat === undefined ? (
           <Welcome user={userInfo} />
         ) : (
-          <ChatSection currentChat={currentChat} currentUser={userInfo} />
+          <ChatSection
+            currentChat={currentChat}
+            socket={socket}
+            currentUser={userInfo}
+          />
         )}
       </div>
     </div>
