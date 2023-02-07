@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useRef } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { logout } from "./../../Redux/Login/login.action";
 import * as io from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks";

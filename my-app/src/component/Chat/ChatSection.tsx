@@ -55,7 +55,7 @@ const ChatSection: FC<PropsType> = ({ currentChat, currentUser, socket }) => {
 
   useEffect(() => {
     getMessage();
-  }, [currentChat, currentUser]);
+  }, [currentChat]);
   return (
     <>
       <div className="w-3/5 m-auto border-2 h-full border-white border-solid">

@@ -1,7 +1,6 @@
 import React, { FC, useState } from "react";
 import { UserInfo } from "../../Redux/Chat/chat.reducer";
 import { FaPowerOff } from "react-icons/fa";
-import ChatSection from "./ChatSection";
 import "./chat.css";
 import { useAppDispatch } from "../../Redux/hooks";
 import { logout } from "../../Redux/Login/login.action";
