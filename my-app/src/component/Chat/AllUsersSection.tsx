@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import { UserInfo } from "../../Redux/Chat/chat.reducer";
 import { FaPowerOff } from "react-icons/fa";
 import ChatSection from "./ChatSection";
+import "./chat.css";
 import { useAppDispatch } from "../../Redux/hooks";
 import { logout } from "../../Redux/Login/login.action";
 import { useNavigate } from "react-router-dom";
@@ -27,10 +28,10 @@ const AllUsersSection: FC<PropsType> = ({ user, allUsers, changeChat }) => {
     dispatch(logout());
     navigate("/");
   }
-
+  // console.log(currentChat);
   return (
     <>
-      <div className="w-2/5 overflow-scroll m-auto border-2 h-full border-white border-solid">
+      <div className=" usersBox ">
         {user?.avatarImage && user?.username && allUsers && (
           <div>
             <div className="flex items-center justify-around gap-10">

@@ -11,7 +11,7 @@ const ChatComponent: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { userInfo, allUsers } = useAppSelector((store) => store.chat);
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentChat, setCurrentChat] = useState(undefined);
   const loggedUser = JSON.parse(localStorage.getItem("logged_user") as string);
   function handleLogout() {
     dispatch(logout());
@@ -20,14 +20,13 @@ const ChatComponent: FC = () => {
   useEffect(() => {
     dispatch(getAllUsers(loggedUser));
   }, [dispatch, loggedUser]);
-  if (userInfo?.avatarImage === "") {
-    console.log(userInfo);
-  }
 
   function handleChatChange(chat: any) {
-    setCurrentUser(chat);
+    // console.log("CHat", chat);
+    // setCu
+    setCurrentChat(chat);
   }
-  console.log(currentUser);
+  // console.log(currentChat);
   return (
     <div>
       <div className="flex justify-evenly">
@@ -41,10 +40,10 @@ const ChatComponent: FC = () => {
           user={userInfo}
           changeChat={handleChatChange}
         />
-        {currentUser === undefined ? (
+        {currentChat === undefined ? (
           <Welcome user={userInfo} />
         ) : (
-          <ChatSection currentUser={currentUser} />
+          <ChatSection currentChat={currentChat} currentUser={userInfo} />
         )}
       </div>
     </div>

@@ -1,9 +1,28 @@
 import React, { FC } from "react";
 
-const Messages: FC = () => {
+interface MsgType {
+  fromSelf: boolean;
+  message: string;
+}
+
+interface PropsType {
+  msg: MsgType[];
+}
+
+const Messages: FC<PropsType> = ({ msg }) => {
   return (
     <>
-      <div className="border-2 h-[75%] border-dotted border-white"></div>
+      <div className="border-2   h-[80%] border-dotted border-white">
+        <div>
+          {msg?.map((el) => {
+            return (
+              <div className={el?.fromSelf ? "text-right" : "text-left"}>
+                <p>{el?.message}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 };

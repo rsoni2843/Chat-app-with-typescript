@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
 import userRoutes from "./src/routes/user.routes";
+import chatRoutes from "./src/routes/chat.routes";
 import connectDb from "./src/config/connect";
 
 const app = express();
@@ -12,9 +13,10 @@ const MONGO_URL = process.env.MONGO_URL || "";
 app.use(cors());
 app.use(express.json());
 
-app.get("/",(req,res)=>res.send("Home route working."))
+app.get("/", (req, res) => res.send("Home route working."));
 
 app.use("/user", userRoutes);
+app.use("/chat", chatRoutes);
 
 connectDb(MONGO_URL);
 

@@ -25,7 +25,7 @@ interface InitState {
   allUsersError: boolean;
   userLoading: boolean;
   userError: boolean;
-  userInfo: null | UserInfo ;
+  userInfo: null | UserInfo;
   allUsers: null | UserInfo[];
 }
 
