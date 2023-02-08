@@ -10,14 +10,14 @@ interface PropsType {
   msg: MsgType[];
 }
 const Messages: FC<PropsType> = ({ msg }) => {
-  const scrollRef = useRef<any>(null);
-
+  const scrollRef = useRef<HTMLDivElement>(null);
+  console.log(scrollRef);
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [msg]);
   return (
     <>
-      <div className="border-2 messageBox overflow-scroll h-[80%] border-dotted border-white">
+      <div className="border-2 max- messageBox overflow-scroll h-[80%] border-dotted border-white">
         <div>
           {msg?.map((el) => {
             return (

@@ -9,12 +9,12 @@ import { useNavigate } from "react-router-dom";
 interface PropsType {
   user: UserInfo | null;
   allUsers: UserInfo[] | null;
-  changeChat: any;
+  changeChat: (chat: UserInfo) => void;
 }
 
 // function changeCurrentChat() {}
 
-const AllUsersSection: FC<PropsType> = ({ user, allUsers, changeChat }) => {
+const Section1: FC<PropsType> = ({ user, allUsers, changeChat }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [currentChat, setCurrentChat] = useState<number | undefined>(undefined);
@@ -30,21 +30,24 @@ const AllUsersSection: FC<PropsType> = ({ user, allUsers, changeChat }) => {
   // console.log(currentChat);
   return (
     <>
-      <div className=" usersBox ">
+      <div className=" h-full w-[40%] usersBox max-[480px]:h-[50vh] max-[480px]:w-[100%]">
         {user?.avatarImage && user?.username && allUsers && (
           <div>
             <div className="flex items-center justify-around gap-10">
-              <h3>{user?.username}</h3>
               <img
-                className="h-20"
+                className="h-20 max-[480px]:h-14"
                 src={`data:image/svg+xml;base64,${user?.avatarImage}`}
                 alt="AvatarImage"
               />
+              <h3 className="font-bold text-xl max-[480px]:text-sm capitalize">
+                {user?.username}
+              </h3>
               <FaPowerOff
                 onClick={handleLogout}
-                className="bg-[red] cursor-pointer transition-all ease-in duration-200 hover:text-3xl p-1 rounded-md text-2xl"
+                className="bg-[red] cursor-pointer transition-all ease-in duration-200 hover:text-3xl p-1 rounded-md  text-2xl max-[480px]:text-xl"
               />
             </div>
+            <hr />
             <div className="flex flex-col items-center  overflow-auto gap-3  p-2">
               {allUsers?.map((el, i) => {
                 return (
@@ -52,17 +55,19 @@ const AllUsersSection: FC<PropsType> = ({ user, allUsers, changeChat }) => {
                     onClick={() => handleChangeChat(el, i)}
                     className={
                       currentChat === i
-                        ? "flex items-center transition cursor-pointer rounded w-[98%] bg-tertiary p-3  gap-16"
-                        : "flex items-center transition cursor-pointer rounded w-[98%] bg-formBg p-3  gap-16"
+                        ? "flex  items-center transition cursor-pointer rounded w-[98%] bg-tertiary p-3  gap-16"
+                        : "flex hover:bg-tertiary items-center cursor-pointer rounded w-[98%] bg-formBg p-3  gap-16"
                     }
                     key={i}
                   >
                     <img
-                      className="h-16"
+                      className="h-16 max-[480px]:h-10"
                       src={`data:image/svg+xml;base64,${el?.avatarImage}`}
                       alt={el?.username + "allUsersAvatar"}
                     />
-                    <p className="items-center">{el?.username}</p>
+                    <p className="items-center max-[480px]:text-sm capitalize">
+                      {el?.username}
+                    </p>
                   </div>
                 );
               })}
@@ -74,4 +79,4 @@ const AllUsersSection: FC<PropsType> = ({ user, allUsers, changeChat }) => {
   );
 };
 
-export default AllUsersSection;
+export default Section1;
