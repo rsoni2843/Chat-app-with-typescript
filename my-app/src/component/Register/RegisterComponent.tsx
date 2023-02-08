@@ -2,7 +2,6 @@ import React, { FC, useState, FormEvent, ChangeEvent } from "react";
 import { ToastContainer } from "react-toastify";
 import { useAppSelector, useAppDispatch } from "../../Redux/hooks";
 import register from "../../Redux/Register/register.action";
-import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
 import { handleRegisterValidation } from "./handleRegisterValidation";
 import { RegisterForm } from "./registerType";
@@ -32,11 +31,7 @@ const RegisterComponent: FC = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="brand  border-solid border-2 flex m-auto items-center justify-start gap-3 p-3">
-          <img src={Logo} alt="Logo" className="h-10 " />
-          <h1>Chit Chat</h1>
-        </div>
-        <div className="flex rounded-2xl mt-4 p-6 gap-4 flex-col m-auto w-1/3 bg-formBg">
+        <div className="flex rounded-2xl mt-4 p-6 gap-4 flex-col max-[780px]:w-[90%] m-auto w-1/3 bg-formBg">
           <div className="flex flex-col text-left">
             <label htmlFor="name">UserName</label>
             <input

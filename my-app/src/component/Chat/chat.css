@@ -5,8 +5,13 @@
   background-color: #58118e;
   color: white;
   border-radius: 2rem;
-  /* height: 15px; */
+
   font-family: "Josefin Sans", sans-serif;
+}
+@media only screen and (max-width: 600px) {
+  .react-input-emoji--container div {
+    height: 25px;
+  }
 }
 .usersBox::-webkit-scrollbar {
   width: 0.3rem;
@@ -31,9 +36,6 @@
   border-radius: 2rem;
 }
 .usersBox {
-  width: 40%;
   overflow: scroll;
-  border: 2px solid white;
   margin: auto;
-  height: 100%;
 }

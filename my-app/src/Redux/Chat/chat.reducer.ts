@@ -18,6 +18,7 @@ export interface UserInfo {
   username: string;
   email: string;
   avatarImage: string;
+  isAvatarImageSet?:boolean
 }
 
 interface InitState {
