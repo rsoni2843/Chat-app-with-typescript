@@ -11,6 +11,7 @@ export interface User {
   username: string;
   email: string;
   avatarImage: string;
+  isAvatarImageSet?: boolean;
 }
 
 export interface UserLoading {

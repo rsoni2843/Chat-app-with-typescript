@@ -23,7 +23,7 @@ const io = new Server(server, {
   },
 });
 io.on("connection", (socket) => {
-  console.log("User connected: " + socket.id);
+  // console.log("User connected: " + socket.id);
   socket.on("add-user", (userId) => {
     // console.log("USERERERRER", userId);
     socket.join(userId);
@@ -44,24 +44,3 @@ connectDb(MONGO_URL);
 server.listen(PORT, () => {
   console.log(`Server running on PORT ${PORT}`);
 });
-// const io = socket(server, {
-//   cors: {
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   },
-// });
-
-// global.onlineUsers = new Map();
-// io.on("connection", (socket) => {
-//   global.chatSocket = socket;
-//   socket.on("add-user", (userId) => {
-//     onlineUsers.set(userId, socket.id);
-//   });
-
-//   socket.on("send-msg", (data) => {
-//     const sendUserSocket = onlineUsers.get(data.to);
-//     if (sendUserSocket) {
-//       socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-//     }
-//   });
-// });

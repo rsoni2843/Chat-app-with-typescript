@@ -6,15 +6,10 @@ interface PropsType {
 }
 
 const Welcome: FC<PropsType> = ({ user }) => {
-  const mobileScreen: string = " max-[480px]:h-[50vh] max-[480px]:w-[100vw]";
+  const responsiveness: string = "max-[480px]:h-[50vh] max-[480px]:w-[100vw]";
   return (
     <>
-      <div
-        className={
-          "w-3/5  m-auto border-2 h-full border-white border-solid" +
-          mobileScreen
-        }
-      >
+      <div className={"w-3/5  m-auto h-full " + responsiveness}>
         <img
           className="m-auto h-[20rem] max-[480px]:h-[14rem]"
           src={"https://i.stack.imgur.com/kbVsR.gif"}

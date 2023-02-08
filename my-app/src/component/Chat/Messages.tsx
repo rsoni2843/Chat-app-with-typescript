@@ -11,13 +11,13 @@ interface PropsType {
 }
 const Messages: FC<PropsType> = ({ msg }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  console.log(scrollRef);
+  
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [msg]);
   return (
     <>
-      <div className="border-2 max- messageBox overflow-scroll h-[80%] border-dotted border-white">
+      <div className="max- messageBox overflow-scroll h-[80%]  ">
         <div>
           {msg?.map((el) => {
             return (
@@ -26,11 +26,11 @@ const Messages: FC<PropsType> = ({ msg }) => {
                 ref={scrollRef}
                 className={
                   el?.fromSelf
-                    ? " p-2 flex  items-center justify-end  text-right"
+                    ? " p-2 flex max-[480px]:text-xs  items-center justify-end  text-right"
                     : " p-2 flex items-center justify-start text-left"
                 }
               >
-                <p className="p-2 max-w-[40%] break-words pr-4 pl-4 bg-white text-black rounded-lg">
+                <p className="p-2 max-w-[40%] max-[480px]:p-1 break-words pr-4 pl-4 bg-white text-black rounded-lg">
                   {el?.message}
                 </p>
               </div>

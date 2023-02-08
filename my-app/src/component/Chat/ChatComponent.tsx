@@ -20,7 +20,6 @@ const ChatComponent: FC = () => {
   }, [dispatch, loggedUser]);
 
   function handleChatChange(chat: User) {
-    console.log(chat);
     setCurrentChat(chat);
   }
   useEffect(() => {
@@ -28,10 +27,16 @@ const ChatComponent: FC = () => {
       socket.emit("add-user", userInfo?._id);
     }
   }, [userInfo]);
-
+  const responsiveness =
+    "max-[480px]:flex-col min-[781px]:p-2 min-[781px]:rounded-lg max-[480px]:w-full max-[480px]:h-screen max-[780px]:w-full max-[780px]:mt-0 max-[780px]:h-[100vh]";
   return (
     <div>
-      <div className="flex max-[480px]:flex-col max-[480px]:w-full max-[480px]:h-screen border-2 bg-formBg border-solid items-center mt-4 h-[85vh] w-[85vw] m-auto ">
+      <div
+        className={
+          "flex bg-formBg  border-solid items-center mt-4 h-[85vh] w-[85vw] m-auto " +
+          responsiveness
+        }
+      >
         <Section1
           allUsers={allUsers}
           user={userInfo}

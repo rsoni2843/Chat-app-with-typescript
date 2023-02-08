@@ -37,6 +37,5 @@
 }
 .usersBox {
   overflow: scroll;
-  border: 2px solid white;
   margin: auto;
 }

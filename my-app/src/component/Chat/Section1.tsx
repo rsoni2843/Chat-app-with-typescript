@@ -28,18 +28,20 @@ const Section1: FC<PropsType> = ({ user, allUsers, changeChat }) => {
     navigate("/");
   }
   // console.log(currentChat);
+  const responsiveness =
+    "max-[480px]:h-[50vh] max-[480px]:border-b-4 max-[780px]:w-[50%] max-[480px]:w-[100%]";
   return (
     <>
-      <div className=" h-full w-[40%] usersBox max-[480px]:h-[50vh] max-[480px]:w-[100%]">
+      <div className={"h-full w-[40%] usersBox " + responsiveness}>
         {user?.avatarImage && user?.username && allUsers && (
           <div>
             <div className="flex items-center justify-around gap-10">
               <img
-                className="h-20 max-[480px]:h-14"
+                className="h-20 max-[780px]:w-16 max-[480px]:h-14"
                 src={`data:image/svg+xml;base64,${user?.avatarImage}`}
                 alt="AvatarImage"
               />
-              <h3 className="font-bold text-xl max-[480px]:text-sm capitalize">
+              <h3 className="font-bold max-[780px]:text-base  text-xl max-[480px]:text-sm capitalize">
                 {user?.username}
               </h3>
               <FaPowerOff
@@ -61,7 +63,7 @@ const Section1: FC<PropsType> = ({ user, allUsers, changeChat }) => {
                     key={i}
                   >
                     <img
-                      className="h-16 max-[480px]:h-10"
+                      className="h-16 max-[780px]:w-14 max-[480px]:h-10"
                       src={`data:image/svg+xml;base64,${el?.avatarImage}`}
                       alt={el?.username + "allUsersAvatar"}
                     />

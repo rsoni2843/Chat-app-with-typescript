@@ -31,11 +31,9 @@ const SetAvatar: FC = () => {
 
   // If users avatar image is not set it will redirect to avatar page
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo?.isAvatarImageSet) {
       console.log(userInfo);
-      if (userInfo?.avatarImage !== "") {
-        navigate("/");
-      }
+      navigate("/");
     }
   }, [userInfo, navigate]);
 

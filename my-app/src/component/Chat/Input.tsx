@@ -19,7 +19,7 @@ const ChatInput: FC<PropsType> = ({ sendMsg }) => {
 
   return (
     <>
-      <div className="flex  pb-[0.3rem] h-[10vh] items-center ">
+      <div className="flex pb-[0.3rem] h-[10vh] items-center ">
         <InputEmoji
           value={msg}
           onChange={setMsg}
