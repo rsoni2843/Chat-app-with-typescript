@@ -15,7 +15,7 @@ export const getAllUsers =
     dispatch({ type: ALL_USER_LOADING });
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/user/getAllUsers/${id}`
+        `https://chat-app-backend-builded.vercel.app/user/getAllUsers/${id}`
       );
       // console.log(data);
       dispatch({ type: ALL_USER_SUCCESS, allUser: data.users });
@@ -28,7 +28,9 @@ export const getCurrentUser =
     dispatch({ type: CURRENT_USER_LOADING });
     try {
       let { data } = await axios.get(
-        `http://localhost:5000/user/getCurrentUser/${JSON.parse(id as string)}`
+        `https://chat-app-backend-builded.vercel.app/user/getCurrentUser/${JSON.parse(
+          id as string
+        )}`
       );
       // console.log(data);
       dispatch({ type: CURRENT_USER_SUCCESS, payload: data.user });
