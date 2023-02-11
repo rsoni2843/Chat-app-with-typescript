@@ -9,7 +9,7 @@ import { UserInfo } from "../../Redux/Chat/chat.reducer";
 interface PropsType {
   currentChat: User | undefined;
   currentUser: UserInfo | null;
-  socket: io.Socket;
+  socket: any;
 }
 
 export interface MessagesType {
@@ -19,21 +19,24 @@ export interface MessagesType {
 
 const Section2: FC<PropsType> = ({ currentChat, currentUser, socket }) => {
   const [messages, setMessages] = useState<MessagesType[]>([]);
-  const [arrivalMessage, setArrivalMessage] = useState<any>();
+  const [arrivalMessage, setArrivalMessage] = useState<any>(null);
 
   // console.log("CHAT", currentChat);
   // console.log("USER", currentUser);
   const handleSendMessage = async (msg: string) => {
-    socket.emit("send-msg", {
+    socket.current.emit("send-msg", {
       to: currentChat?._id,
       from: currentUser?._id,
       msg,
     });
-    await axios.post("http://localhost:5000/chat/addMessage", {
-      from: currentUser?._id,
-      to: currentChat?._id,
-      message: msg,
-    });
+    await axios.post(
+      "https://chat-app-backend-builded.vercel.app/chat/addMessage",
+      {
+        from: currentUser?._id,
+        to: currentChat?._id,
+        message: msg,
+      }
+    );
     const msgs: any = [...messages];
     msgs.push({ fromSelf: true, message: msg });
     setMessages(msgs);
@@ -41,21 +44,24 @@ const Section2: FC<PropsType> = ({ currentChat, currentUser, socket }) => {
 
   useEffect(() => {
     if (socket) {
-      socket.on("msg-receive", (msg) => {
+      socket.current.on("msg-receive", (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
-  }, [socket]);
+  }, [socket, messages]);
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage]);
 
   async function getMessage() {
-    const res = await axios.post("http://localhost:5000/chat/getMessage", {
-      from: currentUser?._id,
-      to: currentChat?._id,
-    });
+    const res = await axios.post(
+      "https://backend-chat-app-sf48.vercel.app/chat/getMessage",
+      {
+        from: currentUser?._id,
+        to: currentChat?._id,
+      }
+    );
     setMessages(res?.data);
   }
 

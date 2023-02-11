@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
-import * as io from "socket.io-client";
+import React, { FC, useEffect, useState, useRef } from "react";
+import { io } from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
 import Section1 from "./Section1";
 import Section2 from "./Section2";
@@ -7,10 +7,11 @@ import { getAllUsers } from "./../../Redux/Chat/chat.action";
 import Welcome from "./Welcome";
 import { User } from "../../Redux/Chat/chat.actionType";
 
-const socket: io.Socket = io.connect("http://localhost:5000");
+// const socket: io.Socket = io.connect("*");
 
 const ChatComponent: FC = () => {
   const dispatch = useAppDispatch();
+  const socket = useRef<any>(undefined);
   const { userInfo, allUsers } = useAppSelector((store) => store.chat);
   const [currentChat, setCurrentChat] = useState<User | undefined>(undefined);
   const loggedUser = JSON.parse(localStorage.getItem("logged_user") as string);
@@ -24,7 +25,8 @@ const ChatComponent: FC = () => {
   }
   useEffect(() => {
     if (userInfo) {
-      socket.emit("add-user", userInfo?._id);
+      socket.current = io("https://backend-chat-app-ksq5.onrender.com/");
+      socket.current.emit("add-user", userInfo?._id);
     }
   }, [userInfo]);
   const responsiveness =
