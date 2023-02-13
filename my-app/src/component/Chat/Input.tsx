@@ -1,7 +1,4 @@
 import React, { FC, useState } from "react";
-// import { BsEmojiSmileFill } from "react-icons/bs";
-// import Picker from "emoji-picker-react";
-// import { IoMdSend } from "react-icons/io";
 import InputEmoji from "react-input-emoji";
 
 interface PropsType {

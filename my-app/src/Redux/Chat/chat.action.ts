@@ -10,12 +10,13 @@ import {
   CURRENT_USER_SUCCESS,
   CURRENT_USER_LOADING,
 } from "./chat.actionType";
+// https://chat-app-backend-builded-3ni5.vercel.app/
 export const getAllUsers =
   (id: string) => async (dispatch: Dispatch<AllUserDispatchType>) => {
     dispatch({ type: ALL_USER_LOADING });
     try {
       const { data } = await axios.get(
-        `https://chat-app-backend-builded.vercel.app/user/getAllUsers/${id}`
+        `https://chat-app-backend-builded-3ni5.vercel.app/user/getAllUsers/${id}`
       );
       // console.log(data);
       dispatch({ type: ALL_USER_SUCCESS, allUser: data.users });
@@ -28,7 +29,7 @@ export const getCurrentUser =
     dispatch({ type: CURRENT_USER_LOADING });
     try {
       let { data } = await axios.get(
-        `https://chat-app-backend-builded.vercel.app/user/getCurrentUser/${JSON.parse(
+        `https://chat-app-backend-builded-3ni5.vercel.app/user/getCurrentUser/${JSON.parse(
           id as string
         )}`
       );

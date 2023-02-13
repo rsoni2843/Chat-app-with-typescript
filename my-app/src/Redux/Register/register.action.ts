@@ -15,7 +15,7 @@ const register =
     dispatch({ type: REGISTER_LOADING });
     try {
       const { data } = await axios.post(
-        "https://chat-app-backend-builded.vercel.app/register",
+        "https://chat-app-backend-builded-3ni5.vercel.app/user/register",
         creds
       );
 

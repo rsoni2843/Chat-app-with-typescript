@@ -16,7 +16,7 @@ const login =
     console.log(creds);
     try {
       const { data } = await axios.post(
-        "https://chat-app-backend-builded.vercel.app/user/login",
+        "https://chat-app-backend-builded-3ni5.vercel.app/user/login",
         creds
       );
       if (data.status === true) {

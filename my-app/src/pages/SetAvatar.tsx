@@ -45,7 +45,7 @@ const SetAvatar: FC = () => {
         const user = JSON.parse(localStorage.getItem("logged_user") as string);
         console.log(user);
         const { data } = await axios.post(
-          `https://chat-app-backend-builded.vercel.app/user/setAvatar/${user}`,
+          `https://chat-app-backend-builded-3ni5.vercel.app/user/setAvatar/${user}`,
           {
             image: avatar[selectedAvatar],
           }

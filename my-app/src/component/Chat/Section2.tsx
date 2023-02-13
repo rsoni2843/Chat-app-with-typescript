@@ -24,13 +24,13 @@ const Section2: FC<PropsType> = ({ currentChat, currentUser, socket }) => {
   // console.log("CHAT", currentChat);
   // console.log("USER", currentUser);
   const handleSendMessage = async (msg: string) => {
-    socket.current.emit("send-msg", {
+    socket.emit("send-msg", {
       to: currentChat?._id,
       from: currentUser?._id,
       msg,
     });
     await axios.post(
-      "https://chat-app-backend-builded.vercel.app/chat/addMessage",
+      "https://chat-app-backend-builded-3ni5.vercel.app/chat/addMessage",
       {
         from: currentUser?._id,
         to: currentChat?._id,
@@ -44,7 +44,7 @@ const Section2: FC<PropsType> = ({ currentChat, currentUser, socket }) => {
 
   useEffect(() => {
     if (socket) {
-      socket.current.on("msg-receive", (msg) => {
+      socket.on("msg-receive", (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
@@ -56,7 +56,7 @@ const Section2: FC<PropsType> = ({ currentChat, currentUser, socket }) => {
 
   async function getMessage() {
     const res = await axios.post(
-      "https://backend-chat-app-sf48.vercel.app/chat/getMessage",
+      "https://chat-app-backend-builded-3ni5.vercel.app/chat/getMessage",
       {
         from: currentUser?._id,
         to: currentChat?._id,
